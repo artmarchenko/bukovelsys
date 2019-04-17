@@ -37,9 +37,18 @@ public class Turnstile {
     }
 
     public void getStat(){
+        int counterPass = 0;
+        int counterCansel = 0;
 
-        //TODO fix this
-        System.out.println("Total passed: " + counterPassed.size() + ". " + "Total canceled: " + counterCanceled.size() );
+        for (Map.Entry<SkiPassType,Integer> entry : counterPassed.entrySet()){
+            counterPass = counterPass + entry.getValue();
+        }
+
+        for (Map.Entry<SkiPassType,Integer> entry : counterCanceled.entrySet()){
+            counterCansel = counterCansel + entry.getValue();
+        }
+
+        System.out.println("Total passed: " + counterPass + ". " + "Total canceled: " + counterCansel );
     }
 
     public void getStat(SkiPassType skiPassType){
