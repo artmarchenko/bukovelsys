@@ -8,5 +8,4 @@ public enum SkiPassType {
     HOLIDAY_HALF_DAY_AFTERNOON,
     HOLIDAY_DAY_LIMIT,
     SEASON
-
 }
