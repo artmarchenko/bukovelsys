@@ -1,13 +1,14 @@
 package bokovelsys.cards;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public abstract class SkiPass {
     protected int id;
     protected SkiPassType skiPassType;
     private boolean blocked;
-    private LocalDate activationDate;
+    private LocalDateTime activationDate;
     protected Date expirationDate;
 
     public int getId() {
@@ -22,11 +23,11 @@ public abstract class SkiPass {
         return blocked;
     }
 
-    public LocalDate getActivationDate() {
+    public LocalDateTime getActivationDate() {
         return activationDate;
     }
 
-    public void setActivationDate(LocalDate activationDate) {
+    public void setActivationDate(LocalDateTime activationDate) {
         this.activationDate = activationDate;
     }
 
