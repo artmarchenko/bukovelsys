@@ -5,6 +5,7 @@ import bokovelsys.cards.SkiPassType;
 import bokovelsys.servises.AccountSystem;
 import bokovelsys.servises.Turnstile;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
 public class Main {
@@ -12,27 +13,14 @@ public class Main {
 
         AccountSystem accountSystem = new AccountSystem();
 
-        SkiPass daySkiPass = accountSystem.createDaySkiPass(5);
-        SkiPass daySkiPass2 = accountSystem.createDaySkiPass(5);
+        SkiPass seasonSkiPass1 = accountSystem.createSeasonSkiPass(LocalDateTime.of(2019,8, 1,0,0));
+        SkiPass seasonSkiPass2 = accountSystem.createSeasonSkiPass(LocalDateTime.of(2018,8, 1,0,0));
 
-//        System.out.println(accountSystem.getSkiPassList().size());
-//
-//
-//        System.out.println(daySkiPass.getId());
-//        System.out.println(daySkiPass2.getId());
         Turnstile turnstile = new Turnstile();
-        Map<SkiPassType,Integer> mp = turnstile.getCounterPassed();
-        mp.put(SkiPassType.SEASON, 5);
-        mp.put(SkiPassType.HALF_DAY_AFTERNOON, 2);
 
-        Map<SkiPassType,Integer> mc = turnstile.getCounterCanceled();
-        mc.put(SkiPassType.DAY_LIMIT, 3);
-        mc.put(SkiPassType.SEASON, 1);
+        System.out.println(turnstile.validate(seasonSkiPass1));
+        System.out.println(turnstile.validate(seasonSkiPass2));
 
-
-        turnstile.getStat();
-
-        turnstile.getStat(SkiPassType.DAY_LIMIT);
 
     }
 

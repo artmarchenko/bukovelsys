@@ -9,7 +9,7 @@ public abstract class SkiPass {
     protected SkiPassType skiPassType;
     private boolean blocked;
     private LocalDateTime activationDate;
-    protected Date expirationDate;
+    protected LocalDateTime expirationDate;
 
     public int getId() {
         return id;
@@ -31,7 +31,7 @@ public abstract class SkiPass {
         this.activationDate = activationDate;
     }
 
-    public Date getExpirationDate() {
+    public LocalDateTime getExpirationDate() {
         return expirationDate;
     }
 

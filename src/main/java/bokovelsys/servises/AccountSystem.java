@@ -2,6 +2,7 @@ package bokovelsys.servises;
 
 import bokovelsys.cards.*;
 
+import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -56,8 +57,8 @@ public class AccountSystem {
         return skiPass;
     }
 
-    public SkiPass createSeasonSkiPass() {
-        SeasonSkiPass skiPass = new SeasonSkiPass();
+    public SkiPass createSeasonSkiPass(LocalDateTime date) {
+        SeasonSkiPass skiPass = new SeasonSkiPass(date);
         skiPassList.add(skiPass);
         return skiPass;
     }

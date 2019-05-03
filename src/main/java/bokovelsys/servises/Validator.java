@@ -1,26 +1,23 @@
 package bokovelsys.servises;
 
-import bokovelsys.cards.DaySkiPass;
-import bokovelsys.cards.HolidayDaySkiPass;
-import bokovelsys.cards.SkiPass;
-import bokovelsys.cards.SkiPassType;
+import bokovelsys.cards.*;
 
 import java.time.DayOfWeek;
-import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 public class Validator {
 
     public boolean validate(SkiPass skiPass) {
-        LocalDate date = LocalDate.now();
+        LocalDateTime date = LocalDateTime.now();
         if (skiPass.getSkiPassType() == SkiPassType.DAY_LIMIT) {
             DayOfWeek dayOfWeek = date.getDayOfWeek();
             if (dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY) return false;
             else {
                 DaySkiPass sp = (DaySkiPass) skiPass;
                 if (sp.getLastWriteOffTime() == null) {
-                    sp.setActivationDate(LocalDate.now());
+                    sp.setActivationDate(LocalDateTime.now());
                     sp.setDayQuantity(sp.getDayQuantity() - 1);
                     sp.setLastWriteOffTime(LocalDate.now());
                     return true;
@@ -40,18 +37,58 @@ public class Validator {
         }
 
         if (skiPass.getSkiPassType() == SkiPassType.HALF_DAY_MORNING) {
+            DayOfWeek dayOfWeek = date.getDayOfWeek();
+            if (dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY) return false;
 
+            else {
+                HalfDayMorningSkiPass sp = (HalfDayMorningSkiPass) skiPass;
+                LocalDateTime controlTime = LocalDateTime.now();
+                controlTime.withHour(13).withMinute(0);
+                if (sp.getActivationDate() == null) {
+                    if (date.isBefore(controlTime)) {
+                        sp.setActivationDate(LocalDateTime.now());
+                        return true;
+                    }
+                }
+
+                if (sp.getActivationDate() != null && sp.getActivationDate().isBefore(controlTime)) {
+                    return true;
+                }
+
+                return false;
+            }
 
         }
 
         if (skiPass.getSkiPassType() == SkiPassType.HALF_DAY_AFTERNOON) {
+            DayOfWeek dayOfWeek = date.getDayOfWeek();
+            if (dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY) return false;
+
+            else {
+                HalfDayAfternoonSkiPass sp = (HalfDayAfternoonSkiPass) skiPass;
+                LocalDateTime controlTime = LocalDateTime.now();
+                controlTime.withHour(13).withMinute(0);
+                if (sp.getActivationDate() == null) {
+                    if (date.isAfter(controlTime)) {
+                        sp.setActivationDate(LocalDateTime.now());
+                        return true;
+                    }
+                }
+
+                if (sp.getActivationDate() != null && sp.getActivationDate().isAfter(controlTime)) {
+                    return true;
+                }
+
+                return false;
+            }
+
 
         }
 
         if (skiPass.getSkiPassType() == SkiPassType.HOLIDAY_DAY_LIMIT) {
             HolidayDaySkiPass sp = (HolidayDaySkiPass) skiPass;
             if (sp.getLastWriteOffTime() == null) {
-                sp.setActivationDate(LocalDate.now());
+                sp.setActivationDate(LocalDateTime.now());
                 sp.setDayQuantity(sp.getDayQuantity() - 1);
                 sp.setLastWriteOffTime(LocalDate.now());
                 return true;
@@ -68,20 +105,54 @@ public class Validator {
                 return false;
 
 
-
         }
 
         if (skiPass.getSkiPassType() == SkiPassType.HOLIDAY_HALF_DAY_AFTERNOON) {
+            HolidayHalfDayAfternoonSkiPass sp = (HolidayHalfDayAfternoonSkiPass) skiPass;
+            LocalDateTime controlTime = LocalDateTime.now();
+            controlTime.withHour(13).withMinute(0);
+            if (sp.getActivationDate() == null) {
+                if (date.isAfter(controlTime)) {
+                    sp.setActivationDate(LocalDateTime.now());
+                    return true;
+                }
+            }
+
+            if (sp.getActivationDate() != null && sp.getActivationDate().isAfter(controlTime)) {
+                return true;
+            }
+
+            return false;
 
         }
 
         if (skiPass.getSkiPassType() == SkiPassType.HOLIDAY_HALF_DAY_MORNING) {
+            HalfDayMorningSkiPass sp = (HalfDayMorningSkiPass) skiPass;
+            LocalDateTime controlTime = LocalDateTime.now();
+            controlTime.withHour(13).withMinute(0);
+            if (sp.getActivationDate() == null) {
+                if (date.isBefore(controlTime)) {
+                    sp.setActivationDate(LocalDateTime.now());
+                    return true;
+                }
+            }
+
+            if (sp.getActivationDate() != null && sp.getActivationDate().isBefore(controlTime)) {
+                return true;
+            }
+            return false;
 
         }
 
         if (skiPass.getSkiPassType() == SkiPassType.SEASON) {
+            SeasonSkiPass sp = (SeasonSkiPass) skiPass;
+            if (date.isBefore(sp.getExpirationDate())){
+                return true;
+            }
+            else return false;
 
         }
+
         return false;
     }
 }
