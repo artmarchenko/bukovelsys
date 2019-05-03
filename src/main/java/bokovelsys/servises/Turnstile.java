@@ -9,7 +9,7 @@ import java.util.Map;
 public class Turnstile {
     private Map<SkiPassType, Integer> counterPassed = new HashMap<>();
     private Map<SkiPassType, Integer> counterCanceled = new HashMap<>();
-    private Validator validator = new Validator;
+    private Validator validator = new Validator();
 
     public Turnstile() {
         for (SkiPassType skiPassType : SkiPassType.values()) {
