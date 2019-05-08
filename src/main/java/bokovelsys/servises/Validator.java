@@ -10,7 +10,6 @@ import java.time.temporal.ChronoUnit;
 public class Validator {
 
     public boolean validate(SkiPass skiPass) {
-        LocalDateTime date = LocalDateTime.now();
         if (skiPass.getSkiPassType() == SkiPassType.DAY_LIMIT) {
             validateDayLimit(skiPass);
         }
@@ -51,18 +50,18 @@ public class Validator {
             if (sp.getLastWriteOffTime() == null) {
                 sp.setActivationDate(LocalDateTime.now());
                 sp.setDayQuantity(sp.getDayQuantity() - 1);
-                sp.setLastWriteOffTime(LocalDate.now());
+                sp.setLastWriteOffTime(LocalDateTime.now());
                 return true;
             }
-            if (sp.getDayQuantity() >= 0 && ChronoUnit.DAYS.between(date, sp.getLastWriteOffTime()) < 1)
+            if (sp.getDayQuantity() >= 0 && Math.abs(ChronoUnit.DAYS.between(date, sp.getLastWriteOffTime())) < 1)
                 return true;
-            if (sp.getDayQuantity() > 0 && ChronoUnit.DAYS.between(date, sp.getLastWriteOffTime()) >= 1) {
+            if (sp.getDayQuantity() > 0 && Math.abs(ChronoUnit.DAYS.between(date, sp.getLastWriteOffTime())) >= 1) {
                 sp.setDayQuantity(sp.getDayQuantity() - 1);
-                sp.setLastWriteOffTime(LocalDate.now());
+                sp.setLastWriteOffTime(LocalDateTime.now());
                 return true;
             }
 
-            if (sp.getDayQuantity() == 0 && ChronoUnit.DAYS.between(date, sp.getLastWriteOffTime()) >= 1)
+            if (sp.getDayQuantity() == 0 && Math.abs(ChronoUnit.DAYS.between(date, sp.getLastWriteOffTime())) >= 1)
                 return false;
 
         }

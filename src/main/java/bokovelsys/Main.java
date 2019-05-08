@@ -6,20 +6,18 @@ import bokovelsys.servises.AccountSystem;
 import bokovelsys.servises.Turnstile;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
 
-        AccountSystem accountSystem = new AccountSystem();
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime past = LocalDateTime.parse("2018-05-05 00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+        System.out.println(past);
+        System.out.println(ChronoUnit.DAYS.between(now, past));
 
-        SkiPass seasonSkiPass1 = accountSystem.createSeasonSkiPass(LocalDateTime.of(2019,8, 1,0,0));
-        SkiPass seasonSkiPass2 = accountSystem.createSeasonSkiPass(LocalDateTime.of(2018,8, 1,0,0));
-
-        Turnstile turnstile = new Turnstile();
-
-        System.out.println(turnstile.validate(seasonSkiPass1));
-        System.out.println(turnstile.validate(seasonSkiPass2));
 
 
     }

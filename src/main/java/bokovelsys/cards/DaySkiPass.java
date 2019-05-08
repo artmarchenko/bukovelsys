@@ -3,11 +3,12 @@ package bokovelsys.cards;
 import bokovelsys.servises.AccountSystem;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class DaySkiPass extends SkiPass {
     private int dayQuantity;
-    private LocalDate lastWriteOffTime;
+    private LocalDateTime lastWriteOffTime;
 
     public DaySkiPass(int dayQuantity) {
         this.dayQuantity = dayQuantity;
@@ -23,11 +24,11 @@ public class DaySkiPass extends SkiPass {
         this.dayQuantity = dayQuantity;
     }
 
-    public LocalDate getLastWriteOffTime() {
+    public LocalDateTime getLastWriteOffTime() {
         return lastWriteOffTime;
     }
 
-    public void setLastWriteOffTime(LocalDate lastWriteOffTime) {
+    public void setLastWriteOffTime(LocalDateTime lastWriteOffTime) {
         this.lastWriteOffTime = lastWriteOffTime;
     }
 }
